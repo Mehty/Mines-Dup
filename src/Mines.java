@@ -34,6 +34,10 @@ public class Mines extends JPanel {
 				int index = i * X + j;
 			    tiles[index] = createTile(j, i);
 			    tiles[index].setText(" ");
+			    // TODO: RM this
+			   // if (board.isMine(j, i)) {
+			    //	tiles[index].setText("M");
+			  //  }
 			    add(tiles[index]);
 			}
 		}
@@ -82,6 +86,8 @@ public class Mines extends JPanel {
 	    		System.out.printf("r: %d, c: %d, %b, %b\n",
 	    				x, y, b == bt, b.equals(bt));
 	    		*/
+	    		if (board.hasWon()) JOptionPane.showMessageDialog(null, "You Won!");
+	    		if (board.hasLost()) JOptionPane.showMessageDialog(null, "You Lost!");
 	    	}
     	});
     	return b;
@@ -97,7 +103,8 @@ public class Mines extends JPanel {
 		    	} else {
 		    		tiles[index].setText(Character.toString(ch));
 		    	}
-		    	board.printBoard();
+		    	
+		    	//board.printBoard();
 		    }
 		}
     }

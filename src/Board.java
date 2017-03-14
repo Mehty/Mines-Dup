@@ -62,7 +62,7 @@ public class Board {
     	return false;
     }
 
-    private boolean isMine(int x, int y) {
+    public boolean isMine(int x, int y) {
     	for (Posn m : mines) {
     		if (m.x == x && m.y == y) {
     			return true;
@@ -103,6 +103,25 @@ public class Board {
 		return true;
     }
     
+    public boolean hasWon() {
+    	for (int i = 0; i < board.length; i++) {
+    		int x = i % width;
+    		int y = i / width;
+    		if ((is_revealed(x, y) && isMine(x, y)) ||
+    			(!is_revealed(x, y) && !isMine(x, y))) 
+    				return false;
+    	}
+    	return true;
+    }
+    
+    public boolean hasLost() {
+    	for (int i = 0; i < board.length; i++) {
+    		if (board[i] == MINE) return true;
+    	}
+    	return false;
+    }
+    
+  
     private int boardIndex(int x, int y) {
     	return y * width + x;
     }
