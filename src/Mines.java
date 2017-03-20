@@ -10,7 +10,7 @@ public class Mines extends JPanel {
     int X, Y, num_mines;
     GridLayout MinesLayout;
     
-    static final String GAME_TITLE = "Mines";
+    static final String GAME_TITLE = "Mine Sweeper";
     
     static final Color GRAY = new Color(170, 170, 170);
     static final Color LIGHT_GRAY = new Color(220, 220, 220);
@@ -76,18 +76,24 @@ public class Mines extends JPanel {
     	b.setBackground(GRAY);
     	b.setFocusPainted(false);
 
-    	b.addActionListener(new ActionListener() {
-	    	@Override
-	    	public void actionPerformed(ActionEvent e) {
+    	b.addMouseListener(new MouseAdapter() {
+    		public void mousePressed(MouseEvent e) {
 	    		// JButton bt = Mines.this.getTile(x, y);
-	    		board.reveal(x, y);
-	    		Mines.this.drawBoard();
+	    		if (SwingUtilities.isLeftMouseButton(e)) {
+	    			board.reveal(x, y);
+	    			Mines.this.drawBoard();
 	    		/* why === returns false?
 	    		System.out.printf("r: %d, c: %d, %b, %b\n",
 	    				x, y, b == bt, b.equals(bt));
 	    		*/
-	    		if (board.hasWon()) JOptionPane.showMessageDialog(null, "You Won!");
-	    		if (board.hasLost()) JOptionPane.showMessageDialog(null, "You Lost!");
+	    			if (board.hasWon()) JOptionPane.showMessageDialog(null, "You Won!");
+	    			if (board.hasLost()) JOptionPane.showMessageDialog(null, "You Lost!");
+	    		} else if (SwingUtilities.isRightMouseButton(e)) {
+	    			board.flag(x,  y);
+	    			Mines.this.drawBoard();
+	    			if (board.hasWon()) JOptionPane.showMessageDialog(null, "You Won!");
+	    			if (board.hasLost()) JOptionPane.showMessageDialog(null, "You Lost!");
+	    		}
 	    	}
     	});
     	return b;
